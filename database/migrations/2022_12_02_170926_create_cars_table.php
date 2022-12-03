@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string("description",250);
             $table->unsignedBigInteger('user');
             $table->unsignedBigInteger('type_car');
+            $table->unsignedBigInteger('group');
             
             $table->foreign('user')->references('id')->on('users');
             $table->foreign('type_car')->references('id')->on('type_car');
+            $table->foreign('group')->references('id')->on('groups');
             $table->timestamps();
         });
     }

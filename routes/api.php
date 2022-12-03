@@ -29,13 +29,15 @@ Route::post('/out', [LoginController::class, "logout"])->middleware('auth:sanctu
 
 Route::get('/verificarTelefono',[verificarController::class,'telefono'],function(){
 })->name('verificarTelefono');
-Route::get('/verificarCodigo',[verificarController::class,'codigo'],function(){
+Route::post('/verificarCodigo',[verificarController::class,'codigo'],function(){
 })->name('codigo');
 Route::get('segundoCorreo',[verificarController::class,'segundoCorreo'],function(){
 })->name('correo');
 
 Route::post('/feed',[adafruitController::class,'addFeed']);
 Route::post('/car',[carController::class,'addCar']);
+Route::post('/data',[adafruitController::class,'createData']);
+Route::get('/data',[adafruitController::class,'seeData']);
 
 Route::get('vista',function(){
     return view('primero');

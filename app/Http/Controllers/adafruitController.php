@@ -38,8 +38,9 @@ class adafruitController extends Controller
             ],400);
         }
         $response = Http::withHeaders([
-            'X-AIO-Key' => 'aio_WtQQ55jtFzjjMO3VxAfV5Lo9OSF6'
-        ])->post('https://io.adafruit.com/api/v2/Hectorfrdz/feeds',
+            'X-AIO-Key' => $request->aio_key
+        ])
+        ->post('https://io.adafruit.com/api/v2/'.$request->username.'/feeds?group_key='.$request->group_key,
         [
             "name" => $request->name
         ]);
@@ -50,7 +51,7 @@ class adafruitController extends Controller
             $feed->description = $request->description;
             $feed->enabled = 1;
             $feed->group = 1;
-            $feed->car = 1;
+            $feed->car = 3;
             if($feed->save())
             {
                 return response()->json([
@@ -72,6 +73,66 @@ class adafruitController extends Controller
             "message"   => "Alguno de los campos no se ha llenado",
             "error"     => [$response],
             "data"      => []
+        ],400);
+    }
+
+    public function createData(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'value' => 'required',
+                'username' => 'required',
+                'feedKey' => 'required',
+            ],
+            [
+                "value.required" => "El campo :attribute es obligatorio",
+                "username.required" => "El campo :attribute es obligatorio",
+            ]
+        );
+        if($validate->fails())
+        {
+            return response()->json([
+                "status"    => 400,
+                "message"   => "Alguno de los campos no se ha llenado",
+                "error"     => [$validate->errors()],
+                "data"      => []
+            ],400);
+        }
+
+        $response = Http::withHeaders([
+            'X-AIO-Key' => $request->aio_key
+        ])->post('https://io.adafruit.com/api/v2/'.$request->username.'/feeds/'. $request->feedKey .'/data',
+        [
+            "value" => $request->value
+        ]);
+        if($response->successful())
+        {
+            return response()->json([
+                "status"    => 200,
+                "message"   => "Datos enviados correctamente",
+                "value" => $request->value
+            ],200);
+        }
+        return response()->json([
+            "status"    => 400,
+            "message"   => "Error al enviar los datos",
+            "error"     => $response
+        ],400);
+    }
+
+    public function seeData(Request $request)
+    {
+        $response = Http::withHeaders([
+            'X-AIO-Key' => $request->aio_key
+        ])->get('https://io.adafruit.com/api/v2/'.$request->username.'/feeds/'. $request->feedKey .'/data/retain');
+        if($response->successful())
+        {
+            return $response;
+        }
+        return response()->json([
+            "status"    => 400,
+            "message"   => "Error al recuperar los datos",
         ],400);
     }
 }

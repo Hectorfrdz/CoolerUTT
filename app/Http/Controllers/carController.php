@@ -35,8 +35,9 @@ class carController extends Controller
         $car = new Car();
         $car->name = $request->name;
         $car->description = $request->description;
-        $car->user = 1;
-        $car->type_car = 1;
+        $car->user = $request->user;
+        $car->type_car = $request->type_car;
+        $car->group = $request->group;
         if($car->save())
         {
             return response()->json([
