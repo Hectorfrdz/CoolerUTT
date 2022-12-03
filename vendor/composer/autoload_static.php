@@ -340,8 +340,8 @@ class ComposerStaticInit0865fb99cd22bbe8283bf8181ca38483
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -508,6 +508,11 @@ class ComposerStaticInit0865fb99cd22bbe8283bf8181ca38483
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
+        'App\\Http\\Controllers\\adafruitController' => __DIR__ . '/../..' . '/app/Http/Controllers/adafruitController.php',
+        'App\\Http\\Controllers\\carController' => __DIR__ . '/../..' . '/app/Http/Controllers/carController.php',
+        'App\\Http\\Controllers\\feedController' => __DIR__ . '/../..' . '/app/Http/Controllers/feedController.php',
+        'App\\Http\\Controllers\\verificarController' => __DIR__ . '/../..' . '/app/Http/Controllers/verificarController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -518,6 +523,14 @@ class ComposerStaticInit0865fb99cd22bbe8283bf8181ca38483
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Jobs\\primero' => __DIR__ . '/../..' . '/app/Jobs/primero.php',
+        'App\\Jobs\\segundo' => __DIR__ . '/../..' . '/app/Jobs/segundo.php',
+        'App\\Mail\\Verificar_Correo' => __DIR__ . '/../..' . '/app/Mail/Verificar_Correo.php',
+        'App\\Mail\\Verificar_Telefono' => __DIR__ . '/../..' . '/app/Mail/Verificar_Telefono.php',
+        'App\\Models\\Car' => __DIR__ . '/../..' . '/app/Models/Car.php',
+        'App\\Models\\Feed' => __DIR__ . '/../..' . '/app/Models/Feed.php',
+        'App\\Models\\Group' => __DIR__ . '/../..' . '/app/Models/Group.php',
+        'App\\Models\\Type_car' => __DIR__ . '/../..' . '/app/Models/Type_car.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

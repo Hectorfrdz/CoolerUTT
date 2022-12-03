@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\adafruitController;
+use App\Http\Controllers\carController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\verificarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +21,22 @@ Route::prefix('/v1')->group(function () {
     Route::get('/hola', function () {
         return 'Hola mundo';
     });
+});
+
+Route::post('/reg', [LoginController::class, 'register']);
+Route::post('/in', [LoginController::class, 'login']);
+Route::post('/out', [LoginController::class, "logout"])->middleware('auth:sanctum');
+
+Route::get('/verificarTelefono',[verificarController::class,'telefono'],function(){
+})->name('verificarTelefono');
+Route::get('/verificarCodigo',[verificarController::class,'codigo'],function(){
+})->name('codigo');
+Route::get('segundoCorreo',[verificarController::class,'segundoCorreo'],function(){
+})->name('correo');
+
+Route::post('/feed',[adafruitController::class,'addFeed']);
+Route::post('/car',[carController::class,'addCar']);
+
+Route::get('vista',function(){
+    return view('primero');
 });

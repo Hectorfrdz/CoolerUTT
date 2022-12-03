@@ -1,0 +1,6 @@
+git clone https://github.com/Hectorfrdz/chato_snacks.git #comando para clonar el proyecto
+git add . #comando para añadir cambios 
+git commit -m "" #comando para encapsular cambios (entre las comillas va una breve descripcion de los cambios)
+git push origin tu_rama #comando para subir los cambios
+git pull origin develop #comando para bajar cambios
+git checkout tu_rama #comando para cambiar a la respectiva rama
