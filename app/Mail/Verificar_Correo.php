@@ -52,6 +52,7 @@ class Verificar_Correo extends Mailable
                 'email' => $this->user->email,
                 'id'=> $this->user->id,
                 'url' => $this->url,
+                'status' => 200
             ],
         );
     }

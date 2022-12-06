@@ -96,6 +96,7 @@ class LoginController extends Controller
                 {
                     $token = $user->createToken('auth_token')->plainTextToken;
                     return response()->json([
+                        'status'=>200,
                         'access_token' => $token,
                         'token_type' => 'bearer'
                     ],200);
