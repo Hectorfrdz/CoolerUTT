@@ -14,4 +14,9 @@ class Group extends Model
      * @var string
      */
     protected $table = 'groups';
+
+    public function Feeds()
+    {
+        return $this->hasMany(Feed::class);
+    }
 }

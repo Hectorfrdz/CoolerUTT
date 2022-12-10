@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('contrasena_red',250);
             $table->string('Username',250);
             $table->string('Active_Key',250);
+            $table->string('bearerToken')->nullable();
             $table->bigInteger('verificationCode')->nullable();
         });
     }

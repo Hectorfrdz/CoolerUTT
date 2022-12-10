@@ -14,4 +14,9 @@ class Feed extends Model
      * @var string
      */
     protected $table = 'feeds';
+
+    public function Group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }

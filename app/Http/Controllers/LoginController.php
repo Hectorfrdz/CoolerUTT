@@ -49,6 +49,8 @@ class LoginController extends Controller
 
         $url = URL::temporarySignedRoute('verificarTelefono',now()->addMinutes(5),
         ['id'=>$user->id]);
+        $url2 = URL::temporarySignedRoute('codigo',now()->addMinutes(5),
+        ['id'=>$user->id]);
 
         primero::dispatch($user,$url)
         ->onQueue('email')
@@ -60,6 +62,7 @@ class LoginController extends Controller
         return response()->json([
             "status"    => 201,
             "message"   => "Usuario creado",
+            "url2" => $url2
         ],201);
     }
     
@@ -95,8 +98,14 @@ class LoginController extends Controller
                 if($user->status == 1)
                 {
                     $token = $user->createToken('auth_token')->plainTextToken;
+
+                    $user->bearerToken = $token;
+                    $user->save();
+                    
                     return response()->json([
                         'status'=>200,
+                        'user_id'=>$user->id,
+                        'user_name'=>$user->name,
                         'access_token' => $token,
                         'token_type' => 'bearer'
                     ],200);
@@ -122,4 +131,6 @@ class LoginController extends Controller
             "msg" => "Sesion Cerrada"
         ]);   
     }
+
+    
 }

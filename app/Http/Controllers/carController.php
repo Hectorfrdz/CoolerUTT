@@ -108,4 +108,9 @@ class carController extends Controller
             "data"      => []
         ],400);
     }
+
+    public function groups()
+    {
+        
+    }
 }

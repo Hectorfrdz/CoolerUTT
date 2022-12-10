@@ -30,16 +30,13 @@ class verificarController extends Controller
         //dd($user);
         $user->verificationCode = $Code;
         $user->save();
-        $url = URL::temporarySignedRoute('codigo',now()->addMinutes(5),
-        ['id'=>$user->id]);
 
-        segundo::dispatch($user,$url,$Code
-        )->onQueue('phone')
+        segundo::dispatch($user,$Code)
+        ->onQueue('phone')
         ->onConnection('database')
         ->delay(now()->addSeconds(30));
 
         return View('espera');
-
     }
 
     public function codigo(Request $request)

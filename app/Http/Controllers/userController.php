@@ -13,11 +13,6 @@ class userController extends Controller
     {
         $validateUser = Validator::make($request->all(),
         [
-            'name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required|integer',
-            'password'=>'required',
-            'lastname'=>'required',
             'Username'=>'required|max:250',
             'Active_Key'=>'required|max:250',
             'red'=>'required|max:250',
@@ -34,16 +29,10 @@ class userController extends Controller
         }
         $user = User::find($id);
 
-       
-        $user->name=$request->name;
-        $user->lastname=$request->lastname;
-        $user->email=$request->email;
-        $user->phone=$request->phone;
         $user->red=$request->red;
         $user->contrasena_red=$request->contrasena_red;
         $user->Username=$request->Username;
         $user->Active_Key=$request->Active_Key;
-        $user->password= Hash::make($request->password);
 
         if($user->save())
         {
@@ -59,6 +48,39 @@ class userController extends Controller
             "message"   => "Ocurrio un error, vuelva a intentarlo",
             "error"     => $user,
             "data"      => []
+        ],400);
+    }
+
+    public function showUser($id)
+    {
+        $user = User::find($id);
+        if($user)
+        {
+            return response()->json([
+                "status"=>200,
+                "data"=>$user
+            ],200);
+        }
+        return response()->json([
+            "status"=>400,
+            "message"=>"usuario no encontrado"
+        ],400);
+    }
+
+    public function adafruit($id)
+    {
+        $user = User::find($id);
+        if($user)
+        {
+            return response()->json([
+                "status"=>200,
+                "Active_Key"=>$user->Active_Key,
+                "Username"=>$user->Username,
+            ],200);
+        }
+        return response()->json([
+            "status"=>400,
+            "message"=>"usuario no encontrado"
         ],400);
     }
 }

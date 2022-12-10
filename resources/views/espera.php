@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Recibiras un correo para verificar tu telefono, ademas de un codigo en tu telefono</h1>
+    <h1>Recibiras un codigo para verificar tu telefono</h1>
 </body>
 </html>

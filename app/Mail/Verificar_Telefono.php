@@ -12,17 +12,16 @@ use Illuminate\Queue\SerializesModels;
 class Verificar_Telefono extends Mailable
 {
     use Queueable, SerializesModels;
-    protected $user,$url;
+    protected $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, String $url)
+    public function __construct(User $user)
     {
         $this->user=$user;
-        $this->url=$url;
     }
 
     /**
@@ -47,7 +46,7 @@ class Verificar_Telefono extends Mailable
         return new Content(
             view: 'second',
             with: [
-                'url' => $this->url,
+            
             ],
         );
     }

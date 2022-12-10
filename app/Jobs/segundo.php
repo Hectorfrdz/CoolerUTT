@@ -17,17 +17,16 @@ use Illuminate\Support\Facades\Mail;
 class segundo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $user,$url,$Code;
+    protected $user,$Code;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, String $url, $Code)
+    public function __construct(User $user,$Code)
     {
         $this->user=$user;
-        $this->url=$url;
         $this->Code=$Code;
     }
 
@@ -38,14 +37,12 @@ class segundo implements ShouldQueue
      */
     public function handle()
     {
-        $response = Http::post('https://rest.nexmo.com/sms/json',[
-            'from'=>"Vonage APIs",
-            'text'=>"Codigo de verificacion: $this->Code",
-            'to'=>52 .$this->user->phone,
-            'api_key'=>"8b651de2",
-            'api_secret'=>"umg1irRgyuvSGqGb"
+        $response = Http::withBasicAuth('AC78410a00e0da71f3ebc678757cba36d1','01e731148f37e027e4c8785e43677f57')
+        ->asForm()
+        ->post('https://api.twilio.com/2010-04-01/Accounts/AC78410a00e0da71f3ebc678757cba36d1/Messages.json',[
+        'To'=> "whatsapp:+52".$this->user->phone,
+        'From'=>"whatsapp:+14155238886",
+        'Body'=>"Tu codigo de verificacion es:".$this->Code
         ]);
-
-        Mail::to($this->user)->send(new Verificar_Telefono($this->user,$this->url));
     }
 }

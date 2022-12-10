@@ -29,6 +29,8 @@ Route::post('/reg', [LoginController::class, 'register']);
 Route::post('/in', [LoginController::class, 'login']);
 Route::post('/out', [LoginController::class, "logout"])->middleware('auth:sanctum');
 Route::put('/user/{id}', [userController::class, 'updateUser']);
+Route::get('/user/{id}', [userController::class, 'showUser']);
+Route::get('/adafruit/{id}', [userController::class, 'adafruit']);
 
 Route::get('/verificarTelefono',[verificarController::class,'telefono'],function(){
 })->name('verificarTelefono');
@@ -39,12 +41,15 @@ Route::get('segundoCorreo',[verificarController::class,'segundoCorreo'],function
 
 Route::post('/feed',[feedController::class,'addFeed']);
 Route::put('/feed/{id}',[feedController::class,'updateFeed']);
-Route::get('/feed',[feedController::class,'addFeed']);
 Route::post('/car',[carController::class,'addCar']);
 Route::get('/car',[carController::class,'viewCar']);
 Route::put('/car/{id}',[carController::class,'updateCar']);
 Route::post('/data',[adafruitController::class,'createData']);
 Route::get('/data',[adafruitController::class,'seeData']);
+Route::post('/group',[feedController::class,'createGroup']);
+Route::get('/feed_group/{id}',[feedController::class,'feed_group']);
+Route::get('/feedgroup/{id}',[feedController::class,'showFeed_group']);
+Route::get('/feed/{id}',[feedController::class,'showFeed']);
 
 Route::get('vista',function(){
     return view('primero',['status'=>200]);

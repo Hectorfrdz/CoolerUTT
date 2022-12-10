@@ -16,13 +16,12 @@ return new class extends Migration
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
             $table->string("name",250);
-            $table->string("description",250);
             $table->boolean("enabled");
-            $table->unsignedBigInteger('group');
-            $table->unsignedBigInteger('car');
+            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('car_id');
             
-            $table->foreign('group')->references('id')->on('groups');
-            $table->foreign('car')->references('id')->on('cars');
+            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('car_id')->references('id')->on('cars');
             $table->timestamps();
         });
     }

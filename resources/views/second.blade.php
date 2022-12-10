@@ -38,11 +38,8 @@
                                             Activa tu cuenta</h1>
                                         <p
                                             style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
-                                            Con un Json llamado Code consume la siguiente ruta con el codigo que recibiste en tu telefono:</p>
-                                        <p
-                                            style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
-                                             <h2>{{$url}}</h2>
-                                        </p>
+                                            Recibiste un codigo a tu telefono: {{$phone}}
+                                            </p>
                                     </td>
                                 </tr>
                             </table>
