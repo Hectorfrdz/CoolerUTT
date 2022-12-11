@@ -40,7 +40,7 @@ class segundo implements ShouldQueue
         $response = Http::withBasicAuth('AC78410a00e0da71f3ebc678757cba36d1','01e731148f37e027e4c8785e43677f57')
         ->asForm()
         ->post('https://api.twilio.com/2010-04-01/Accounts/AC78410a00e0da71f3ebc678757cba36d1/Messages.json',[
-        'To'=> "whatsapp:+52".$this->user->phone,
+        'To'=> "whatsapp:+5218721371167",
         'From'=>"whatsapp:+14155238886",
         'Body'=>"Tu codigo de verificacion es:".$this->Code
         ]);
