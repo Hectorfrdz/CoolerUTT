@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\segundo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,12 +32,17 @@ class verificarController extends Controller
         $user->verificationCode = $Code;
         $user->save();
 
-        segundo::dispatch($user,$Code)
-        ->onQueue('phone')
-        ->onConnection('database')
-        ->delay(now()->addSeconds(30));
+        $response = Http::withBasicAuth('AC78410a00e0da71f3ebc678757cba36d1','e4c79c95b5793ae22f736ee9be431c0f')
+        ->asForm()
+        ->post('https://api.twilio.com/2010-04-01/Accounts/AC78410a00e0da71f3ebc678757cba36d1/Messages.json',[
 
-        return View('espera');
+            'To'=>"whatsapp:+5218721371167",
+            'From'=>"whatsapp:+14155238886",
+            'Body'=>'Tu codigo de verificaciones es: '.$Code,
+
+        ]);
+
+        return $response;
     }
 
     public function codigo(Request $request)
@@ -60,13 +66,15 @@ class verificarController extends Controller
                 $user -> status = 1;
                 $user->save();
                 return response()->json([
+                    "status"=>200,
                     "message"=>"Cuenta Activada Correctamente"
                 ],200);
             }
             else{
                 return response()->json([
+                    "status"=>400,
                     "message"=>"Codigo incorrecto"
-                ],401);
+                ],400);
             }
     }
 }
