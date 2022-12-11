@@ -45,7 +45,7 @@ Route::post('/car',[carController::class,'addCar']);
 Route::get('/cars',[carController::class,'viewCar']);
 Route::put('/car{id}',[carController::class,'updateCar']);
 Route::post('/data',[adafruitController::class,'createData']);
-Route::get('/data',[adafruitController::class,'seeData']);
+Route::get('/datas',[adafruitController::class,'seeData']);
 Route::post('/group',[feedController::class,'createGroup']);
 Route::get('/feed_group/{id}',[feedController::class,'feed_group']);
 Route::get('/feedgroup/{id}',[feedController::class,'showFeed_group']);
