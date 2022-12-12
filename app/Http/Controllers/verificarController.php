@@ -33,11 +33,11 @@ class verificarController extends Controller
         $user->save();
 
         $response = Http::post('https://rest.nexmo.com/sms/json', [
-        "from"=>"Pablo Vazquez",
+        "from"=>"CoolerUTT",
         'api_key' => "a5f228dd",
         'api_secret' => "GRrWz6F07QPQ3g0z",
         'to' => 52 .$user->telefono,
-        'text' => "Tu codigo de verificacion es: ".$user->mobile_verify_code,
+        'text' => "Tu codigo de verificacion es: ".$user->verificationCode,
         ]);
         
         return View('espera');
