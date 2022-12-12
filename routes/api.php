@@ -50,7 +50,7 @@ Route::post('/group',[feedController::class,'createGroup']);
 Route::get('/feed_group/{id}',[feedController::class,'feed_group']);
 Route::get('/feedgroup',[feedController::class,'showFeed_group']);
 Route::get('/feeds/{id}',[feedController::class,'showFeed']);
-Route::get('/grupo',[feedController::class,'showGroup']);
+Route::get('/gruposs',[feedController::class,'showGroup']);
 
 Route::get('vista',function(){
     return view('primero',['status'=>200]);
