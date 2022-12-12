@@ -66,31 +66,28 @@ class carController extends Controller
                 if($response2->successful())
                 {
                     $feed = new Feed();
-                    $feed->name = $sensores[0];
+                    $feed->name = "temperatura";
                     $feed->enabled = 1;
                     $feed->car_id = $car->id;
                     $feed = new Feed();
-                    $feed->name = $sensores[1];
+                    $feed->name = "distancia";
                     $feed->enabled = 1;
                     $feed->car_id = $car->id;
                     $feed = new Feed();
-                    $feed->name = $sensores[2];
+                    $feed->name = "nivelagua";
                     $feed->enabled = 1;
                     $feed->car_id = $car->id;
                     $feed = new Feed();
-                    $feed->name = $sensores[3];
+                    $feed->name = "bateria";
                     $feed->enabled = 1;
                     $feed->car_id = $car->id;
                 }
-                if($feed->save())
-                {
-                    return response()->json([
-                        "status"    => 200,
-                        "message"   => "Carrito creado",
-                        "error"     => [],
-                        "data"      => $car
-                    ],200);
-                }
+                return response()->json([
+                    "status"    => 200,
+                    "message"   => "Carrito creado",
+                    "error"     => [],
+                    "data"      => $car
+                ],200);
             }
             return response()->json([
                 "status"    => 400,
