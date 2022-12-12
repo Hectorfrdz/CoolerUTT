@@ -206,7 +206,7 @@ class feedController extends Controller
         return $feed;
     }
 
-    public function showFeed_group($id)
+    public function showFeed_group()
     {
         $grupo = Group::with("feeds")->select("groups.id")
         ->join('feeds','groups.id','=','feeds.group_id')
