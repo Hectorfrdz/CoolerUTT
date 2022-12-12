@@ -51,21 +51,12 @@ class feedController extends Controller
         ]);
         if($response->successful())
         {
-            $feed = new Feed();
-            $feed->name = $request->name;
-            $feed->enabled = 1;
-            $feed->group = $request->group;
-            $feed->car = $request->car;
-            if($feed->save())
-            {
-                return response()->json([
+            return response()->json([
                     "status"    => 200,
                     "message"   => "Feed creado correctamente",
                     "error"     => [],
                     "data"      => $response->body()
                 ],200);
-            }
-            return $response;
         }
         return $response;
     }
