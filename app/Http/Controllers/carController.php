@@ -32,26 +32,38 @@ class carController extends Controller
                 "data"      => []
             ],400);
         }
-        $car = new Car();
-        $car->name = $request->name;
-        $car->description = $request->description;
-        $car->user_id = $request->user;
-        $car->type_car_id = $request->type_car;
-        if($car->save())
+        
+        $response = Http::withHeaders([
+            'X-AIO-Key' => "aio_HKyt736xUHjkF4FvGmipdiPbI1c3"
+        ])
+        ->post('https://io.adafruit.com/api/v2/CoolerUTT/groups',
+        [
+            "name" => $request->name,
+        ]);
+        
+        if($response->succesfull())
         {
+             $car = new Car();
+            $car->name = $request->name;
+            $car->description = $request->description;
+            $car->user_id = $request->user;
+            $car->type_car_id = $request->type_car;
+            if($car->save())
+            {
+                return response()->json([
+                    "status"    => 200,
+                    "message"   => "Carrito creado",
+                    "error"     => [],
+                    "data"      => $car
+                ],200);
+            }
             return response()->json([
-                "status"    => 200,
-                "message"   => "Carrito creado",
-                "error"     => [],
-                "data"      => $car
-            ],200);
+                "status"    => 400,
+                "message"   => "Ocurrio un error, vuelva a intentarlo",
+                "error"     => $car,
+                "data"      => []
+            ],400);
         }
-        return response()->json([
-            "status"    => 400,
-            "message"   => "Ocurrio un error, vuelva a intentarlo",
-            "error"     => $car,
-            "data"      => []
-        ],400);
     }
 
     public function viewCar()
