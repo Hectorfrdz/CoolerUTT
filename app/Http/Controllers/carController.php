@@ -69,6 +69,7 @@ class carController extends Controller
                     $feed->enabled = 1;
                     $feed->car_id = $car->id;
                     }
+                    dd($feed);
                 }
                 return response()->json([
                     "status"    => 200,
