@@ -35,9 +35,9 @@ class carController extends Controller
         }
         
         $response = Http::withHeaders([
-            'X-AIO-Key' => 'aio_nevE21NUupqUrWKnldwvx7XJOeDs',
+            'X-AIO-Key' => $request->aio_key,
         ])
-        ->post('https://io.adafruit.com/api/v2/Hectorfrdz/groups/',
+        ->post('https://io.adafruit.com/api/v2/'.$request->username.'/groups/',
         [
             "name" => $request->name,
         ]);
