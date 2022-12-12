@@ -195,7 +195,7 @@ class feedController extends Controller
         return $feed;
     }
 
-    public function showFeed_group($id)
+    public function showFeed_group()
     {
         $grupo = Group::with("feeds")
         ->join('feeds','groups.id','=','feeds.group_id')
@@ -204,10 +204,7 @@ class feedController extends Controller
         ->groupBy('groups.id')
         ->get();
 
-        return response()->json([
-            'status' => 200,
-            'data' => $grupo
-        ],200);
+        return $grupo;
     }
 
 }
