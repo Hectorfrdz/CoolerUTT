@@ -52,8 +52,8 @@ class carController extends Controller
             $car->type_car_id = $request->type_car;
             if($car->save())
             {
-                $sensores = array("temperatura","distancia","nivelagua","bateria");
-                for($i = 0; $i <= 3; $i++)
+                $sensores = array("temperatura","distancia","nivelagua","bateria","desague");
+                for($i = 0; $i <= 4; $i++)
                 {
                     $response2 = Http::withHeaders([
                         'X-AIO-Key' => $request->aio_key,
