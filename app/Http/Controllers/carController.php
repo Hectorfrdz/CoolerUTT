@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Feed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -64,7 +65,19 @@ class carController extends Controller
 
                     if($response2->successful())
                     {
-                        return $response2;
+                        $feed = new Feed();
+                        $feed->name = $sensores[$i];
+                        $feed->enabled = 1;
+                        $feed->car_id = $car->id;
+                        if($feed->save())
+                        {
+                            return response()->json([
+                                "status"    => 200,
+                                "message"   => "Carrito creado",
+                                "error"     => [],
+                                "data"      => $car
+                            ],200);
+                        }
                     }
                 }
             }
