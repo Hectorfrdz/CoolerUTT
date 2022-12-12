@@ -61,11 +61,11 @@ class carController extends Controller
                     [
                         "name" => $sensores[$i],
                     ]);
-
-                    if($response2->successful())
-                    {
-                        return $response2;
-                    }
+                }
+                
+                if($response2->successful())
+                {
+                    return $response2;
                 }
             }
             return response()->json([
