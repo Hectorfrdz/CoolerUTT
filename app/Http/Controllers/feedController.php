@@ -47,6 +47,7 @@ class feedController extends Controller
         ->post('https://io.adafruit.com/api/v2/'.$request->username.'/feeds?group_key='.$request->group_key,
         [
             "name" => $request->name,
+            "key" => $request->name,
         ]);
         if($response->successful())
         {
