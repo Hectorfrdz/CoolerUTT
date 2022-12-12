@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Feed;
 use App\Models\Group;
+use App\Models\Type_car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -224,7 +225,7 @@ class feedController extends Controller
 
     public function showGroup()
     {
-        $grupo = Group::all();
+        $grupo = Type_car::all();
 
         return $grupo;
     }
