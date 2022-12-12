@@ -142,12 +142,12 @@ class carController extends Controller
         ],400);
     }
 
-    public function groups($id)
+    public function gruposss($id)
     {
         $car = Car::select('cars.id','cars.name')
         ->from('cars')->join('users','users.id','=','cars.user_id')
         ->where('users.id','=',$id);
-
+        
         return $car;
     }
 }
