@@ -60,7 +60,6 @@ class feedController extends Controller
             }
             return $response;
         }
-        return $response;
     }
 
     public function updateFeed(Request $request,$id)
