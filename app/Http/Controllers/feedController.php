@@ -162,7 +162,7 @@ class feedController extends Controller
             ],400);
         }
         $response = Http::withHeaders([
-            'X-AIO-Key' => 'aio_QtFT97hu0bwqKrKGltbawBtCFJpt'
+            'X-AIO-Key' => 'aio_UwgM41oVMAR22nBSx3uOvTTzHtCC'
         ])
         ->post('https://io.adafruit.com/api/v2/CoolerUTT/groups',
         [
