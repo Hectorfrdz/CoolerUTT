@@ -150,6 +150,6 @@ class carController extends Controller
         
         return response()->json([
             "data"=>$car    
-        ],200)
+        ],200);
     }
 }
