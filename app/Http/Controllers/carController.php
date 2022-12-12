@@ -42,7 +42,7 @@ class carController extends Controller
             "name" => $request->name,
         ]);
         
-        if($response->succesfull())
+        if($response->successful())
         {
              $car = new Car();
             $car->name = $request->name;
