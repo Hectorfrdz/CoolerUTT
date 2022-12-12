@@ -51,12 +51,27 @@ class carController extends Controller
             $car->type_car_id = $request->type_car;
             if($car->save())
             {
-                return response()->json([
-                    "status"    => 200,
-                    "message"   => "Carrito creado",
-                    "error"     => [],
-                    "data"      => $car
-                ],200);
+                $sensores = array("temperatura","distancia","nivelagua","bateria");
+                for($i = 0; $i <= 5; $i++)
+                {
+                    $response2 = Http::withHeaders([
+                        'X-AIO-Key' => $request->aio_key,
+                    ])
+                    ->post('https://io.adafruit.com/api/v2/'.$request->username.'/groups/'.$car->name.'/feeds',
+                    [
+                        "name" => $sensores[$i],
+                    ]);
+
+                    if($response2->successful())
+                    {
+                        return response()->json([
+                            "status"    => 200,
+                            "message"   => "Carro creado",
+                            "error"     => $car,
+                            "data"      => []
+                        ],200);
+                    }
+                }
             }
             return response()->json([
                 "status"    => 400,
