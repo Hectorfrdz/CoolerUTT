@@ -207,7 +207,9 @@ class feedController extends Controller
     {
         $grupo = Group::all();
 
-        return $grupo;
+        return response()->json([
+        "data"=>$grupo,
+        ],200);
     }
 
 }
