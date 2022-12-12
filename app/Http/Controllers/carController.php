@@ -144,10 +144,10 @@ class carController extends Controller
 
     public function gruposss($id)
     {
-        $car = Car::select('cars.id','cars.name')
-        ->from('cars')->join('users','users.id','=','cars.user_id')
-        ->where('users.id','=',$id);
-        
-        return $car;
+        $feed = Car::select("cars.name","cars.id")->from('cars')
+        ->join('users','users.id','=','cars.user_id')
+        ->where("cars.user_id","=",$id)
+        ->get();
+        return $feed;
     }
 }
