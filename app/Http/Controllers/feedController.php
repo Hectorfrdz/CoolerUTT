@@ -145,8 +145,6 @@ class feedController extends Controller
             $request->all(),
             [
                 'name' => 'required|max:250',
-                'aio_key' => 'required',
-                'username' => 'required',
             ],
             [
                 "name.required" => "El campo :attribute es obligatorio",
