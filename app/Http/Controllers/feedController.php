@@ -182,7 +182,7 @@ class feedController extends Controller
                     "status"    => 200,
                     "message"   => "Grupo creado correctamente",
                     "error"     => [],
-                    "data"      => $response->body()
+                    "data"      => $feed
                 ],200);
             }
             return response()->json([
