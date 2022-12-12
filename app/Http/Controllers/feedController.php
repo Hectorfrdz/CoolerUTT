@@ -188,6 +188,12 @@ class feedController extends Controller
                 "data"      => [$response->body()]
             ],400);
         }
+        return response()->json([
+                "status"    => 400,
+                "message"   => "Grupo no guardado",
+                "error"     => [],
+                "data"      => [$response->body()]
+            ],400);
     }
 
     public function feed_group($id)
