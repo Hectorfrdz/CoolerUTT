@@ -28,9 +28,6 @@ Route::prefix('/v1')->group(function () {
 Route::post('/reg', [LoginController::class, 'register']);
 Route::post('/in', [LoginController::class, 'login']);
 Route::post('/out', [LoginController::class, "logout"])->middleware('auth:sanctum');
-Route::put('/user/{id}', [userController::class, 'updateUser']);
-Route::get('/users/{id}', [userController::class, 'showUser']);
-Route::get('/adafruit/{id}', [userController::class, 'adafruit']);
 
 Route::get('/verificarTelefono',[verificarController::class,'telefono'],function(){
 })->name('verificarTelefono');
@@ -39,18 +36,25 @@ Route::post('/verificarCodigo',[verificarController::class,'codigo'],function(){
 Route::get('segundoCorreo',[verificarController::class,'segundoCorreo'],function(){
 })->name('correo');
 
-Route::post('/feed',[feedController::class,'addFeed']);
-Route::put('/feedss/{id}',[feedController::class,'updateFeed']);
-Route::post('/car',[carController::class,'addCar'])->middleware('auth:sanctum')->middleware('status');
-Route::get('/cars',[carController::class,'viewCar']);
-Route::put('/car{id}',[carController::class,'updateCar']);
-Route::post('/data',[adafruitController::class,'createData']);
-Route::get('/datas',[adafruitController::class,'seeData']);
-Route::post('/group',[feedController::class,'createGroup']);
-Route::get('/feed_group/{id}',[feedController::class,'feed_group']);
-Route::get('/feedgroup',[feedController::class,'showFeed_group']);
-Route::get('/feeds/{id}',[feedController::class,'showFeed']);
-Route::get('/gruposs/{id}',[carController::class,'gruposss']);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware('status')->group(function(){
+        Route::post('/feed',[feedController::class,'addFeed']);
+        Route::put('/feedss/{id}',[feedController::class,'updateFeed']);
+        Route::post('/car',[carController::class,'addCar']);
+        Route::get('/cars',[carController::class,'viewCar']);
+        Route::put('/car{id}',[carController::class,'updateCar']);
+        Route::post('/data',[adafruitController::class,'createData']);
+        Route::get('/datas',[adafruitController::class,'seeData']);
+        Route::post('/group',[feedController::class,'createGroup']);
+        Route::get('/feed_group/{id}',[feedController::class,'feed_group']);
+        Route::get('/feedgroup',[feedController::class,'showFeed_group']);
+        Route::get('/feeds/{id}',[feedController::class,'showFeed']);
+        Route::get('/gruposs/{id}',[carController::class,'gruposss']);
+        Route::put('/user/{id}', [userController::class, 'updateUser']);
+        Route::get('/users/{id}', [userController::class, 'showUser']);
+        Route::get('/adafruit/{id}', [userController::class, 'adafruit']);
+    });
+});
 
 Route::get('vista',function(){
     return view('primero',['status'=>200]);
