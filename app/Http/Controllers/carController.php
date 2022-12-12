@@ -148,6 +148,8 @@ class carController extends Controller
         ->from('cars')->join('users','users.id','=','cars.user_id')
         ->where('users.id','=',$id);
         
-        return $car;
+        return response()->json([
+            "data"=>$car    
+        ],200)
     }
 }
