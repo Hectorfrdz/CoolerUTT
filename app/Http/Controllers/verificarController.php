@@ -32,17 +32,15 @@ class verificarController extends Controller
         $user->verificationCode = $Code;
         $user->save();
 
-        $response = Http::withBasicAuth('AC78410a00e0da71f3ebc678757cba36d1','e4c79c95b5793ae22f736ee9be431c0f')
-        ->asForm()
-        ->post('https://api.twilio.com/2010-04-01/Accounts/AC78410a00e0da71f3ebc678757cba36d1/Messages.json',[
-
-            'To'=>"whatsapp:+5218721371167",
-            'From'=>"whatsapp:+14155238886",
-            'Body'=>'Tu codigo de verificaciones es: '.$Code,
-
+        $response = Http::post('https://rest.nexmo.com/sms/json', [
+        "from"=>"Pablo Vazquez",
+        'api_key' => "a5f228dd",
+        'api_secret' => "GRrWz6F07QPQ3g0z",
+        'to' => 52 .$user->telefono,
+        'text' => "Tu codigo de verificacion es: ".$user->mobile_verify_code,
         ]);
-
-        return $response;
+        
+        return View('espera');
     }
 
     public function codigo(Request $request)
