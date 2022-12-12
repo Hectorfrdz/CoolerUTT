@@ -51,16 +51,33 @@ class feedController extends Controller
         ]);
         if($response->successful())
         {
-            return response()->json([
+            $feed = new Feed();
+            $feed->name = $request->name;
+            $feed->enabled = 1;
+            $feed->group = $request->group;
+            $feed->car = $request->car;
+            if($feed->save())
+            {
+                return response()->json([
                     "status"    => 200,
                     "message"   => "Feed creado correctamente",
                     "error"     => [],
                     "data"      => $response->body()
                 ],200);
             }
-            return $response;
+            return response()->json([
+                "status"    => 400,
+                "message"   => "Error al crear un Feed",
+                "error"     => [],
+                "data"      => $response->body()
+            ],400);
         }
-        return $response;
+        return response()->json([
+            "status"    => 400,
+            "message"   => "Error al crear un Feed",
+            "error"     => [],
+            "data"      => $response->body()
+        ],400);
     }
 
     public function updateFeed(Request $request,$id)
@@ -189,18 +206,20 @@ class feedController extends Controller
         return $feed;
     }
 
-    public function showFeed_group()
+    public function showFeed_group($id)
     {
         $grupo = Group::with("feeds")->select("groups.id")
         ->join('feeds','groups.id','=','feeds.group_id')
         ->join('cars','feeds.car_id','=','cars.id')
         ->join('users','users.id','=','cars.user_id')
-        ->where('users.id','=',$id)
         ->where('groups.id','=',1)
         ->groupBy('groups.id')
         ->get();
 
-        return $grupo;
+        return response()->json([
+            'status' => 200,
+            'data' => $grupo
+        ],200);
     }
 
     public function showGroup()
