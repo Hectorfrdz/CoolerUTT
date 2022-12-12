@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Feed;
-use App\Models\Group;
+use App\Models\Car;
 use App\Models\Type_car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -17,20 +17,11 @@ class feedController extends Controller
             $request->all(),
             [
                 'name' => 'required|max:250|unique:App\Models\Feed,name',
-                'group' => 'required|integer',
-                'aio_key' => 'required',
-                'username' => 'required',
             ],
             [
                 "name.required" => "El campo :attribute es obligatorio",
                 "name.max" => "El campo :attribute tiene un maximo de 250 caracteres",
                 "name.unique" => "El campo :attribute no puede repetirse",
-                "description.required" => "El campo :attribute es obligatorio",
-                "description.max" => "El campo :attribute tiene un maximo de 250 caracteres",
-                "group.required" => "El campo :attribute es obligatorio",
-                "group.integer" => "El campo :attribute tiene que ser un entero",
-                "aio_key.required" => "El campo :attribute es obligatorio",
-                "username.required" => "El campo :attribute es obligatorio",
             ]
         );
         if($validate->fails())
@@ -55,8 +46,7 @@ class feedController extends Controller
             $feed = new Feed();
             $feed->name = $request->name;
             $feed->enabled = 1;
-            $feed->group = $request->group;
-            $feed->car = $request->car;
+            $feed->car_id = $request->car;
             if($feed->save())
             {
                 return response()->json([
@@ -87,17 +77,11 @@ class feedController extends Controller
             $request->all(),
             [
                 'name' => 'required|max:250',
-                'description' => 'required|max:250',
-                'group' => 'required|integer'
+                'car_id' => 'required',
             ],
             [
                 "name.required" => "El campo :attribute es obligatorio",
                 "name.max" => "El campo :attribute tiene un maximo de 250 caracteres",
-                "name.unique" => "El campo :attribute no puede repetirse",
-                "description.required" => "El campo :attribute es obligatorio",
-                "description.max" => "El campo :attribute tiene un maximo de 250 caracteres",
-                "group.required" => "El campo :attribute es obligatorio",
-                "group.integer" => "El campo :attribute tiene que ser un entero"
             ]
         );
         if($validate->fails())
@@ -115,16 +99,13 @@ class feedController extends Controller
         ->put('https://io.adafruit.com/api/v2/'.$request->username.'/feeds/'.$request->feed_key,
         [
             "name" => $request->name,
-            "description" => $request->description
         ]);
         if($response->successful())
         {
             $feed = Feed::find($id);
             $feed->name = $request->name;
-            $feed->description = $request->description;
             $feed->enabled = 1;
-            $feed->group = $request->group;
-            $feed->car = $request->car;
+            $feed->car_id = $request->car;
             if($feed->save())
             {
                 return response()->json([
@@ -139,67 +120,9 @@ class feedController extends Controller
         return $response;
     }
 
-    public function createGroup(Request $request)
+    public function feed_car($id)
     {
-        $validate = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|max:250',
-            ],
-            [
-                "name.required" => "El campo :attribute es obligatorio",
-                "name.max" => "El campo :attribute tiene un maximo de 250 caracteres",
-                "name.unique" => "El campo :attribute no puede repetirse",
-            ]
-        );
-        if($validate->fails())
-        {
-            return response()->json([
-                "status"    => 400,
-                "message"   => "Alguno de los campos no se ha llenado",
-                "error"     => [$validate->errors()],
-                "data"      => []
-            ],400);
-        }
-        $response = Http::withHeaders([
-            'X-AIO-Key' => 'aio_UwgM41oVMAR22nBSx3uOvTTzHtCC'
-        ])
-        ->post('https://io.adafruit.com/api/v2/CoolerUTT/groups',
-        [
-            "name" => $request->name,
-        ]);
-        if($response->successful())
-        {
-            $feed = new Group;
-            $feed->name = $request->name;
-            if($feed->save())
-            {
-                return response()->json([
-                    "status"    => 200,
-                    "message"   => "Grupo creado correctamente",
-                    "error"     => [],
-                    "data"      => $feed
-                ],200);
-            }
-            return response()->json([
-                "status"    => 400,
-                "message"   => "Grupo no guardado",
-                "error"     => [],
-                "data"      => [$response->body()]
-            ],400);
-        }
-        return response()->json([
-                "status"    => 400,
-                "message"   => "Grupo no guardado",
-                "error"     => [],
-                "data"      => [$response->body()]
-            ],400);
-    }
-
-    public function feed_group($id)
-    {
-        $grupo = Group::with("feeds")
-        ->join('feeds','groups.id','=','feeds.group_id')
+        $grupo = Car::with("feeds")
         ->join('cars','feeds.car_id','=','cars.id')
         ->join('users','users.id','=','cars.user_id')
         ->where('users.id','=',$id)
@@ -213,21 +136,20 @@ class feedController extends Controller
 
     public function showFeed($id)
     {
-        $feed = Feed::select("feeds.name","feeds.id","feeds.group_id")->from('feeds')
-        ->join('groups','groups.id','=','feeds.group_id')
-        ->where("groups.id","=",$id)
+        $feed = Feed::select("feeds.name","feeds.id","feeds.car_id")->from('feeds')
+        ->join('cars','cars.id','=','feeds.car_id')
+        ->where("cars.id","=",$id)
         ->get();
         return $feed;
     }
 
     public function showFeed_group()
     {
-        $grupo = Group::with("feeds")->select("groups.id")
-        ->join('feeds','groups.id','=','feeds.group_id')
+        $grupo = Car::with("feeds")->select("cars.id")
         ->join('cars','feeds.car_id','=','cars.id')
         ->join('users','users.id','=','cars.user_id')
-        ->where('groups.id','=',1)
-        ->groupBy('groups.id')
+        ->where('cars.id','=',1)
+        ->groupBy('cars.id')
         ->get();
 
         return $grupo;

@@ -14,4 +14,9 @@ class Car extends Model
      * @var string
      */
     protected $table = 'cars';
+
+    public function Feeds()
+    {
+        return $this->hasMany(Feed::class);
+    }
 }
