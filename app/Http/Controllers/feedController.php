@@ -197,10 +197,11 @@ class feedController extends Controller
 
     public function showFeed_group()
     {
-        $grupo = Group::with("feeds")
+        $grupo = Group::with("feeds")->select("groups.id")
         ->join('feeds','groups.id','=','feeds.group_id')
         ->join('cars','feeds.car_id','=','cars.id')
         ->join('users','users.id','=','cars.user_id')
+        ->groupBy('groups.id')
         ->get();
 
         return $grupo;
