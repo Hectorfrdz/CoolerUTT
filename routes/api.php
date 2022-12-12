@@ -41,7 +41,7 @@ Route::get('segundoCorreo',[verificarController::class,'segundoCorreo'],function
 
 Route::post('/feed',[feedController::class,'addFeed']);
 Route::put('/feedss/{id}',[feedController::class,'updateFeed']);
-Route::post('/car',[carController::class,'addCar']);
+Route::post('/car',[carController::class,'addCar'])->middleware('status');
 Route::get('/cars',[carController::class,'viewCar']);
 Route::put('/car{id}',[carController::class,'updateCar']);
 Route::post('/data',[adafruitController::class,'createData']);
