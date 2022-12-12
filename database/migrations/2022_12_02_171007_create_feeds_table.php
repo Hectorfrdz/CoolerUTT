@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string("name",250);
             $table->boolean("enabled");
-            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('car_id');
             
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('car_id')->references('id')->on('cars');
             $table->timestamps();
         });
     }
