@@ -38,21 +38,23 @@ Route::get('segundoCorreo',[verificarController::class,'segundoCorreo'],function
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::middleware('status')->group(function(){
-        Route::post('/feed',[feedController::class,'addFeed']);
-        Route::put('/feedss/{id}',[feedController::class,'updateFeed']);
-        Route::post('/car',[carController::class,'addCar']);
-        Route::get('/cars',[carController::class,'viewCar']);
-        Route::put('/car{id}',[carController::class,'updateCar']);
-        Route::post('/data',[adafruitController::class,'createData']);
-        Route::get('/datas',[adafruitController::class,'seeData']);
-        Route::post('/group',[feedController::class,'createGroup']);
-        Route::get('/feed_group/{id}',[feedController::class,'feed_group']);
-        Route::get('/feedgroup',[feedController::class,'showFeed_group']);
-        Route::get('/feeds/{id}',[feedController::class,'showFeed']);
-        Route::get('/gruposs/{id}',[carController::class,'gruposss']);
-        Route::put('/user/{id}', [userController::class, 'updateUser']);
-        Route::get('/users/{id}', [userController::class, 'showUser']);
-        Route::get('/adafruit/{id}', [userController::class, 'adafruit']);
+        Route::middleware('rol:1')->group(function(){
+            Route::post('/feed',[feedController::class,'addFeed']);
+            Route::put('/feedss/{id}',[feedController::class,'updateFeed']);
+            Route::post('/car',[carController::class,'addCar']);
+            Route::get('/cars',[carController::class,'viewCar']);
+            Route::put('/car{id}',[carController::class,'updateCar']);
+            Route::post('/data',[adafruitController::class,'createData']);
+            Route::get('/datas',[adafruitController::class,'seeData']);
+            Route::post('/group',[feedController::class,'createGroup']);
+            Route::get('/feed_group/{id}',[feedController::class,'feed_group']);
+            Route::get('/feedgroup',[feedController::class,'showFeed_group']);
+            Route::get('/feeds/{id}',[feedController::class,'showFeed']);
+            Route::get('/gruposs/{id}',[carController::class,'gruposss']);
+            Route::put('/user/{id}', [userController::class, 'updateUser']);
+            Route::get('/users/{id}', [userController::class, 'showUser']);
+            Route::get('/adafruit/{id}', [userController::class, 'adafruit']);
+        });
     });
 });
 
