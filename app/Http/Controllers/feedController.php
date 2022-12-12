@@ -152,8 +152,6 @@ class feedController extends Controller
                 "name.required" => "El campo :attribute es obligatorio",
                 "name.max" => "El campo :attribute tiene un maximo de 250 caracteres",
                 "name.unique" => "El campo :attribute no puede repetirse",
-                "aio_key.required" => "El campo :attribute es obligatorio",
-                "username.required" => "El campo :attribute es obligatorio",
             ]
         );
         if($validate->fails())
@@ -166,9 +164,9 @@ class feedController extends Controller
             ],400);
         }
         $response = Http::withHeaders([
-            'X-AIO-Key' => $request->aio_key
+            'X-AIO-Key' => 'aio_QoQE756KyKKezd9nvThpP2fNv5wq'
         ])
-        ->post('https://io.adafruit.com/api/v2/'.$request->username.'/groups',
+        ->post('https://io.adafruit.com/api/v2/CoolerUTT/groups',
         [
             "name" => $request->name,
         ]);
