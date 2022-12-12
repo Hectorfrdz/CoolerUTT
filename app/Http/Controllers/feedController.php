@@ -201,7 +201,6 @@ class feedController extends Controller
         ->join('feeds','groups.id','=','feeds.group_id')
         ->join('cars','feeds.car_id','=','cars.id')
         ->join('users','users.id','=','cars.user_id')
-        ->groupBy('groups.id')
         ->get();
 
         return $grupo;
