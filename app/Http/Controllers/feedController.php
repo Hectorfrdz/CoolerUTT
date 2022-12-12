@@ -47,6 +47,7 @@ class feedController extends Controller
         ->post('https://io.adafruit.com/api/v2/'.$request->username.'/feeds?group_key='.$request->group_key,
         [
             "name" => $request->name,
+            "key" => $request->name,
         ]);
         if($response->successful())
         {
@@ -64,9 +65,19 @@ class feedController extends Controller
                     "data"      => $response->body()
                 ],200);
             }
-            return $response;
+            return response()->json([
+                "status"    => 400,
+                "message"   => "Error al crear un Feed",
+                "error"     => [],
+                "data"      => $response->body()
+            ],400);
         }
-        return $response;
+        return response()->json([
+            "status"    => 400,
+            "message"   => "Error al crear un Feed",
+            "error"     => [],
+            "data"      => $response->body()
+        ],400);
     }
 
     public function updateFeed(Request $request,$id)
@@ -201,7 +212,6 @@ class feedController extends Controller
         ->join('feeds','groups.id','=','feeds.group_id')
         ->join('cars','feeds.car_id','=','cars.id')
         ->join('users','users.id','=','cars.user_id')
-        ->where('users.id','=',$id)
         ->where('groups.id','=',1)
         ->groupBy('groups.id')
         ->get();
@@ -210,6 +220,13 @@ class feedController extends Controller
             'status' => 200,
             'data' => $grupo
         ],200);
+    }
+
+    public function showGroup()
+    {
+        $grupo = Group::all();
+
+        return $grupo;
     }
 
 }
