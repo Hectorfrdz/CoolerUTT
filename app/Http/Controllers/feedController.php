@@ -204,7 +204,10 @@ class feedController extends Controller
         ->groupBy('groups.id')
         ->get();
 
-        return $grupo;
+        return response()->json([
+            'status' => 200,
+            'data' => $grupo
+        ],200);
     }
 
 }
