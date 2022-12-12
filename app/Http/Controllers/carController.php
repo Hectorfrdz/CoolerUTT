@@ -62,26 +62,25 @@ class carController extends Controller
                     [
                         "name" => $sensores[$i],
                     ]);
-
-                    if($response2->successful())
-                    {
-                        $feed = new Feed();
-                        $feed->name = $sensores[0];
-                        $feed->enabled = 1;
-                        $feed->car_id = $car->id;
-                        $feed = new Feed();
-                        $feed->name = $sensores[1];
-                        $feed->enabled = 1;
-                        $feed->car_id = $car->id;
-                        $feed = new Feed();
-                        $feed->name = $sensores[2];
-                        $feed->enabled = 1;
-                        $feed->car_id = $car->id;
-                        $feed = new Feed();
-                        $feed->name = $sensores[3];
-                        $feed->enabled = 1;
-                        $feed->car_id = $car->id;
-                    }
+                }
+                if($response2->successful())
+                {
+                    $feed = new Feed();
+                    $feed->name = $sensores[0];
+                    $feed->enabled = 1;
+                    $feed->car_id = $car->id;
+                    $feed = new Feed();
+                    $feed->name = $sensores[1];
+                    $feed->enabled = 1;
+                    $feed->car_id = $car->id;
+                    $feed = new Feed();
+                    $feed->name = $sensores[2];
+                    $feed->enabled = 1;
+                    $feed->car_id = $car->id;
+                    $feed = new Feed();
+                    $feed->name = $sensores[3];
+                    $feed->enabled = 1;
+                    $feed->car_id = $car->id;
                 }
                 if($feed->save())
                 {
