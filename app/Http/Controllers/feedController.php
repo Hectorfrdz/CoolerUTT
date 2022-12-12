@@ -145,15 +145,11 @@ class feedController extends Controller
             $request->all(),
             [
                 'name' => 'required|max:250',
-                'aio_key' => 'required',
-                'username' => 'required',
             ],
             [
                 "name.required" => "El campo :attribute es obligatorio",
                 "name.max" => "El campo :attribute tiene un maximo de 250 caracteres",
                 "name.unique" => "El campo :attribute no puede repetirse",
-                "aio_key.required" => "El campo :attribute es obligatorio",
-                "username.required" => "El campo :attribute es obligatorio",
             ]
         );
         if($validate->fails())
@@ -166,21 +162,38 @@ class feedController extends Controller
             ],400);
         }
         $response = Http::withHeaders([
-            'X-AIO-Key' => $request->aio_key
+            'X-AIO-Key' => 'aio_UwgM41oVMAR22nBSx3uOvTTzHtCC'
         ])
-        ->post('https://io.adafruit.com/api/v2/'.$request->username.'/groups',
+        ->post('https://io.adafruit.com/api/v2/CoolerUTT/groups',
         [
             "name" => $request->name,
         ]);
         if($response->successful())
         {
+            $feed = new Group;
+            $feed->name = $request->name;
+            if($feed->save())
+            {
+                return response()->json([
+                    "status"    => 200,
+                    "message"   => "Grupo creado correctamente",
+                    "error"     => [],
+                    "data"      => $feed
+                ],200);
+            }
             return response()->json([
-                "status"    => 200,
-                "message"   => "Grupo guardado",
+                "status"    => 400,
+                "message"   => "Grupo no guardado",
                 "error"     => [],
                 "data"      => [$response->body()]
-            ],200);
+            ],400);
         }
+        return response()->json([
+                "status"    => 400,
+                "message"   => "Grupo no guardado",
+                "error"     => [],
+                "data"      => [$response->body()]
+            ],400);
     }
 
     public function feed_group($id)
@@ -207,7 +220,7 @@ class feedController extends Controller
         return $feed;
     }
 
-    public function showFeed_group($id)
+    public function showFeed_group()
     {
         $grupo = Group::with("feeds")->select("groups.id")
         ->join('feeds','groups.id','=','feeds.group_id')
@@ -217,10 +230,7 @@ class feedController extends Controller
         ->groupBy('groups.id')
         ->get();
 
-        return response()->json([
-            'status' => 200,
-            'data' => $grupo
-        ],200);
+        return $grupo;
     }
 
     public function showGroup()
