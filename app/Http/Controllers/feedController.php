@@ -174,12 +174,23 @@ class feedController extends Controller
         ]);
         if($response->successful())
         {
+            $feed = new Group;
+            $feed->name = $request->name;
+            if($feed->save())
+            {
+                return response()->json([
+                    "status"    => 200,
+                    "message"   => "Grupo creado correctamente",
+                    "error"     => [],
+                    "data"      => $response->body()
+                ],200);
+            }
             return response()->json([
-                "status"    => 200,
-                "message"   => "Grupo guardado",
+                "status"    => 400,
+                "message"   => "Grupo no guardado",
                 "error"     => [],
                 "data"      => [$response->body()]
-            ],200);
+            ],400);
         }
     }
 
