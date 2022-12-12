@@ -44,7 +44,7 @@ class carController extends Controller
         
         if($response->successful())
         {
-             $car = new Car();
+            $car = new Car();
             $car->name = $request->name;
             $car->description = $request->description;
             $car->user_id = $request->user;
@@ -65,6 +65,7 @@ class carController extends Controller
                 "data"      => []
             ],400);
         }
+        return $response;
     }
 
     public function viewCar()
