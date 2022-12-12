@@ -203,13 +203,13 @@ class feedController extends Controller
         return $grupo;
     }
 
-    public function showGroup()
-    {
-        $grupo = Group::all();
+        public function showGroup()
+        {
+            $grupo = Group::all();
 
-        return response()->json([
-        "data"=>$grupo,
-        ],200);
-    }
+            return response()->json([
+            "data"=>$grupo,
+            ],200);
+        }
 
 }
