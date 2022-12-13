@@ -37,16 +37,6 @@ class carController extends Controller
             ],400);
         }
         
-        $response = Http::withHeaders([
-            'X-AIO-Key' => $request->aio_key,
-        ])
-        ->post('https://io.adafruit.com/api/v2/'.$request->username.'/groups/',
-        [
-            "name" => $request->name,
-        ]);
-        
-        if($response->successful())
-        {
             $car = new Car();
             $car->name = $request->name;
             $car->description = $request->description;
@@ -57,21 +47,11 @@ class carController extends Controller
                 $sensores = array("temperatura","distancia","nivelagua","bateria","desague");
                 for($i = 0; $i <= 4; $i++)
                 {
-                    $response2 = Http::withHeaders([
-                        'X-AIO-Key' => $request->aio_key,
-                    ])
-                    ->post('https://io.adafruit.com/api/v2/'.$request->username.'/groups/'.$car->name.'/feeds',
-                    [
-                        "name" => $sensores[$i],
-                    ]);
-                    if($response2->successful())
-                    {
                     $feed = new Feed();
                     $feed->name = $sensores[$i];
                     $feed->enabled = 1;
                     $feed->car_id = $car->id;
                     $feed->save();
-                    }
                 }
                 Log::channel('slackInfo')->info('Se creo un carro');
                 return response()->json([
@@ -88,8 +68,6 @@ class carController extends Controller
                 "error"     => $car,
                 "data"      => []
             ],400);
-        }
-        return $response;
     }
 
     public function viewCar()
