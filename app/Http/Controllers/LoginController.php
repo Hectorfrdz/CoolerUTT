@@ -7,6 +7,7 @@ use App\Jobs\primero;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,6 +29,7 @@ class LoginController extends Controller
         ]);
 
         if($validateUser->fails()){
+            Log::channel('errores')->error('Error en las validaciones');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Error en las validaciones",
@@ -84,6 +86,7 @@ class LoginController extends Controller
         );
         if ($validator->fails())
         {
+            Log::channel('errores')->error('Error en las validaciones');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Error en las validaciones",
@@ -101,7 +104,8 @@ class LoginController extends Controller
 
                     $user->bearerToken = $token;
                     $user->save();
-                    
+
+                    Log::channel('slackInfo')->info('Se a logeado alguien');
                     return response()->json([
                         'status'=>200,
                         'user_id'=>$user->id,
@@ -111,12 +115,14 @@ class LoginController extends Controller
                     ],200);
                 }
                 else{
+                    Log::channel('errores')->error('Usuario bloqueado');
                     return response()->json([
                         'message' => 'Usuario bloqueado'
                     ],400);
                 }
             }
             else{
+                Log::channel('errores')->error('Credenciales erroneas');
                 return response()->json([
                     'message' => 'Credenciales no correctas'
                 ],400);
@@ -126,6 +132,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $request->user()->Tokens()->delete();
+        Log::channel('slackInfo')->info('Alguien a cerrado sesion');
         return response()->json([
             "status" => 200,
             "msg" => "Sesion Cerrada"

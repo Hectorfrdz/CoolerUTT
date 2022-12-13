@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\Type_car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class feedController extends Controller
@@ -26,6 +27,7 @@ class feedController extends Controller
         );
         if($validate->fails())
         {
+            Log::channel('errores')->error('Error en las validaciones');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Alguno de los campos no se ha llenado",
@@ -49,6 +51,7 @@ class feedController extends Controller
             $feed->car_id = $request->car;
             if($feed->save())
             {
+                Log::channel('slackInfo')->info('Se creo un feed');
                 return response()->json([
                     "status"    => 200,
                     "message"   => "Feed creado correctamente",
@@ -56,6 +59,7 @@ class feedController extends Controller
                     "data"      => $response->body()
                 ],200);
             }
+            Log::channel('errores')->error('Error al crear un feed');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Error al crear un Feed",
@@ -63,6 +67,7 @@ class feedController extends Controller
                 "data"      => $response->body()
             ],400);
         }
+        Log::channel('errores')->error('Error al crear un feed');
         return response()->json([
             "status"    => 400,
             "message"   => "Error al crear un Feed",
@@ -86,6 +91,7 @@ class feedController extends Controller
         );
         if($validate->fails())
         {
+            Log::channel('errores')->error('Error en las validaciones');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Alguno de los campos no se ha llenado",
@@ -108,6 +114,7 @@ class feedController extends Controller
             $feed->car_id = $request->car;
             if($feed->save())
             {
+                Log::channel('slackInfo')->info('Se ha agregado un registro');
                 return response()->json([
                     "status"    => 200,
                     "message"   => "Feed creado correctamente",
@@ -127,7 +134,7 @@ class feedController extends Controller
         ->join('users','users.id','=','cars.user_id')
         ->where('users.id','=',$id)
         ->get();
-
+        Log::channel('slackInfo')->info('Se ha mostraron registros');
         return response()->json([
             'status' => 200,
             'data' => $grupo
@@ -140,6 +147,7 @@ class feedController extends Controller
         ->join('cars','cars.id','=','feeds.car_id')
         ->where("cars.id","=",$id)
         ->get();
+        Log::channel('slackInfo')->info('Se ha mostraron registros');
         return $feed;
     }
 
@@ -151,14 +159,14 @@ class feedController extends Controller
         ->where('cars.id','=',1)
         ->groupBy('cars.id')
         ->get();
-
+        Log::channel('slackInfo')->info('Se ha mostraron registros');
         return $grupo;
     }
 
     public function showGroup()
     {
         $grupo = Type_car::all();
-
+        Log::channel('slackInfo')->info('Se ha mostraron registros');
         return $grupo;
     }
 

@@ -63,6 +63,12 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
+        'errores' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/errores.log'),
+            'level' => 'error', 
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
@@ -70,12 +76,12 @@ return [
             'days' => 14,
         ],
 
-        'slack' => [
+        'slackInfo' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
-            'emoji' => ':boom:',
-            'level' => env('LOG_LEVEL', 'critical'),
+            'username' => 'Laravel API',
+            'emoji' => ':expressionless:',
+            'level' => 'info',
         ],
 
         'papertrail' => [

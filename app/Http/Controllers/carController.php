@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\Feed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class carController extends Controller
@@ -27,6 +28,7 @@ class carController extends Controller
         );
         if($validate->fails())
         {
+            Log::channel('errores')->error('Error en las validaciones');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Alguno de los campos no se ha llenado",
@@ -71,6 +73,7 @@ class carController extends Controller
                     $feed->save();
                     }
                 }
+                Log::channel('slackInfo')->info('Se creo un carro');
                 return response()->json([
                     "status"    => 200,
                     "message"   => "Carrito creado",
@@ -78,6 +81,7 @@ class carController extends Controller
                     "data"      => $car
                 ],200);
             }
+            Log::channel('errores')->error('Error');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Ocurrio un error, vuelva a intentarlo",
@@ -91,7 +95,7 @@ class carController extends Controller
     public function viewCar()
     {
         $request = Car::all();
-
+        Log::channel('slackInfo')->info('Se mostraron datos');
         return response()->json([
             "status"=>200,
             "data"=>$request
@@ -115,6 +119,7 @@ class carController extends Controller
         );
         if($validate->fails())
         {
+            Log::channel('errores')->error('Error en las validaciones');
             return response()->json([
                 "status"    => 400,
                 "message"   => "Alguno de los campos no se ha llenado",
@@ -127,6 +132,7 @@ class carController extends Controller
         $car->description = $request->description;
         if($car->save())
         {
+            Log::channel('slackInfo')->info('Se actualizo un carrito');
             return response()->json([
                 "status"    => 200,
                 "message"   => "Carrito Actualizado",
@@ -134,6 +140,7 @@ class carController extends Controller
                 "data"      => $car
             ],200);
         }
+        Log::channel('errores')->error('Error');
         return response()->json([
             "status"    => 400,
             "message"   => "Ocurrio un error, vuelva a intentarlo",
@@ -148,6 +155,7 @@ class carController extends Controller
         ->join('users','users.id','=','cars.user_id')
         ->where("cars.user_id","=",$id)
         ->get();
+        Log::channel('slackInfo')->info('Se mostraron datos');
         return $feed;
     }
 }
